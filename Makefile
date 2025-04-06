@@ -1,4 +1,9 @@
-all: program
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -g
+TARGET = main.exe
+SOURCES = $(wildcard *.cpp) $(wildcard */*.cpp)
 
-program: *.cpp
-    g++ -std=c++17 -o program *.cpp
+all: $(TARGET)
+
+$(TARGET): $(SOURCES)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SOURCES)
