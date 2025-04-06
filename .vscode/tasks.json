@@ -9,7 +9,7 @@
                 "-g",
                 "main.cpp",
                 "-o",
-                "a.exe"
+                "main.exe"
             ],
             "group": {
                 "kind": "build",
