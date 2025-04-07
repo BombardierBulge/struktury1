@@ -1,10 +1,10 @@
 #include <iostream>
-#include "Lista_jednokierunkowa2.h"
+#include "Lista_jednokierunkowa.h"
 
 
 using namespace std;
 
-static void Addvaluefirst(List& list, int value) {
+void Addvaluefirst(List& list, int value) {
 	Node* first = new Node{ value, nullptr };
 
 	if (list.head == nullptr)
@@ -16,7 +16,7 @@ static void Addvaluefirst(List& list, int value) {
 
 }
 
-static void Addvaluelast(List& list, int value) {
+void Addvaluelast(List& list, int value) {
 	Node* last = new Node{ value, nullptr };
 
 
@@ -28,7 +28,7 @@ static void Addvaluelast(List& list, int value) {
 	}
 }
 
-static void Addvalue(List& list, int value, int index) {
+void Addvalue(List& list, int value, int index) {
 	Node* node = new Node{ value };
 
 	if (list.head == nullptr) {
@@ -64,7 +64,7 @@ static void Addvalue(List& list, int value, int index) {
 	list.tail = node;
 }
 
-static void deletefirstvalue(List& list) {
+void deletefirstvalue(List& list) {
 	Node* first = list.head;
 
 	if (list.head == nullptr) {
@@ -79,7 +79,7 @@ static void deletefirstvalue(List& list) {
 	}
 }
 
-static void deletelastvalue(List& list) {
+void deletelastvalue(List& list) {
 	Node* last = list.head;
 
 	if (list.head == nullptr) {
@@ -106,7 +106,7 @@ static void deletelastvalue(List& list) {
 	}
 }
 
-static void deletevalue(List& list, int value) {
+void deletevalue(List& list, int value) {
 	Node* current = list.head;
 
 	if (current != nullptr && current->value == value) {
@@ -134,7 +134,7 @@ static void deletevalue(List& list, int value) {
 	}
 }
 
-static Node* search(List& list, int value) {
+Node* search(List& list, int value) {
 	Node* point = list.head;
 	while (point != nullptr && point->value != value)
 		point = point->next;
