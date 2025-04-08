@@ -7,17 +7,44 @@
 #include "singly_linked_list/Lista_jednokierunkowa_wczytaj.hpp"
 
 using namespace std;
-
+void createFile(int size) {
+	RandomNumberGenerator generator(1, 1000000, "losowe" + to_string(size) + ".txt");
+	generator.generateFile(size);
+}
+int fileSizes[] = {100, 1000};//, 50000, 100000, 200000, 500000, 1000000 };
+const int FilesNumber = 2;
+void createNFiles() {//Tworzy pliki o rozmiarach z fileSizes[]
+	int n = sizeof(fileSizes) / sizeof(fileSizes[0]);
+	for (int i = 0; i < n; i++) {
+		createFile(fileSizes[i]);
+	}
+}
+void fillstructures(List* list[], ArrayList* array[]) {
+	for (int i = 0; i < FilesNumber; i++) {
+		for(int j = 0; j < fileSizes[i]; j++) {
+			loadFileToSinglyLinkedList("losowe" + to_string(fileSizes[i]) + ".txt", *list[i]);
+			loadFileToArrayList("losowe" + to_string(fileSizes[i]) + ".txt", *array[i]);
+		}
+	}
+}
 int main() {
-    Timer timer; //initialize the timer and start it
-	cout<< "test " << endl;
-    List lista;
-	RandomNumberGenerator generator(1, 1000000, "losowe1.txt");
-	generator.generateFile(100);
-	timer.reset(); 
-	loadFileToSinglyLinkedList("losowe1.txt", lista);
-    cout << timer.measurement_stop(Timer::TimeUnit::Microseconds)<<" \xE6s"<<std::endl;
-	PrintList(lista);
+	createNFiles();
+   List* listy[FilesNumber];
+   ArrayList* tablice[FilesNumber];
    
+   for (int i = 0; i < FilesNumber; i++) {
+	   listy[i] = new List();
+	   tablice[i] = new ArrayList();
+   }
+   Timer timer;
+   cout<<"pomiar czasu wczytu... \n";
+   timer.reset();
+   fillstructures(listy, tablice);
+   cout<<"czas wczytywania do tablicy: "<<timer.measurement_stop(Timer::TimeUnit::Seconds)<<"\n";
+   
+   for (int i = 0; i < FilesNumber; i++) {
+	   delete listy[i];
+	   delete tablice[i];
+   }
     return 0;
 }
