@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Lista_jednokierunkowa.h"
+#include "Lista_jednokierunkowa.hpp"
 
 
 using namespace std;
@@ -65,8 +65,6 @@ void Addvalue(List& list, int value, int index) {
 }
 
 void deletefirstvalue(List& list) {
-	Node* first = list.head;
-
 	if (list.head == nullptr) {
 		cout << "brak wartosci" << endl;
 	}
@@ -148,8 +146,3 @@ void PrintList(List& list) {
 		curr = curr->next;
 	}
 }
-
-int main() {
-
-}
-

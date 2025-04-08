@@ -31,7 +31,7 @@ void ArrayList::addFirst(int value) {
 
 void ArrayList::addAt(int index, int value) {
     if (index < 0 || index > size) {
-        throw std::out_of_range("Index z poza zakresu tablicy");
+        add(value);
     }
     if (size == capacity) {
         resize(2 * capacity);

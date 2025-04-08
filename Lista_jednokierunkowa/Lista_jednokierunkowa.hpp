@@ -18,7 +18,3 @@ void deletelastvalue(List& list);
 void deletevalue(List& list, int value);
 Node* search(List& list, int value);
 void PrintList(List& list);
-
-int main();
-
-

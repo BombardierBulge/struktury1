@@ -18,7 +18,7 @@ void RandomNumberGenerator::generateFile(int count) {
         return;
     }
 
-    // Generujemy liczby losowe w określonym zakresie i zapisujemy do pliku
+	// 
     for (int i = 0; i < count; ++i) {
         int randomNumber = minRange + (rand() % (maxRange - minRange + 1));
         outFile << randomNumber << "\n";
