@@ -14,7 +14,7 @@ void RandomNumberGenerator::generateFile(int count) {
 
     std::ofstream outFile(fileName);
     if (!outFile) {
-        std::cout << "Nie można otworzyć pliku: " << fileName << std::endl;
+        std::cout << "Nie można otworzyc pliku: " << fileName << std::endl;
         return;
     }
 
@@ -25,5 +25,5 @@ void RandomNumberGenerator::generateFile(int count) {
     }
 
     outFile.close();
-    std::cout << "Plik został wygenerowany: " << fileName << std::endl;
+    std::cout << "Plik zostal wygenerowany: " << fileName << std::endl;
 }
