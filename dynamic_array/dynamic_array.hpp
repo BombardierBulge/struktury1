@@ -22,6 +22,10 @@ public:
     int get(int index) const;
 	int find(int value) const;
     void display() const;
+	
+    void removeLast();          
+    void removeAt(int index);   
+    void removeFirst();         
 };
 
 #endif // DYNAMIC_ARRAY_HPP

@@ -6,4 +6,4 @@
 
 void loadFileToSinglyLinkedList(const std::string& fileName, List& list);
 
-#endif // LISTA_JEDNOKIERUNKOWA_WCZYTAJ_HPP
+#endif // LISTA_JEDNOKIERUNKOWA_WCZYTAJ_HPPy

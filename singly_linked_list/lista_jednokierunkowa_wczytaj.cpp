@@ -11,7 +11,7 @@ void loadFileToSinglyLinkedList(const std::string& fileName, List& list) {
 
     int value;
     while (inFile >> value) {
-        Addvaluelast(list,value);
+        list.addLast(value);
     }
 
     inFile.close();

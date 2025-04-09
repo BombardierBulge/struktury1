@@ -1,20 +1,35 @@
-#pragma once
+#ifndef LISTA_JEDNOKIERUNKOWA_HPP
+#define LISTA_JEDNOKIERUNKOWA_HPP
 
-struct Node {
-	int value;
-	Node* next;
+#include <iostream>
+
+class List {
+private:
+    struct Node {
+        int value;
+        Node* next;
+
+        Node(int val, Node* nextNode = nullptr) : value(val), next(nextNode) {}
+    };
+
+    Node* head;
+    Node* tail;
+
+public:
+    
+    List();
+    ~List();
+
+  
+    void addFirst(int value);
+    void addLast(int value);
+    void addAt(int value, int index);
+    void deleteFirst();
+    void deleteLast();
+    void deleteValue(int value);
+    void deleteAt(int index); 
+    Node* search(int value) const;
+    void print() const;
 };
 
-struct List {
-	Node* head = nullptr;
-	Node* tail = nullptr;
-};
-
-void Addvaluefirst(List& list, int value);
-void Addvaluelast(List& list, int value);
-void Addvalue(List& list, int value, int index);
-void deletefirstvalue(List& list);
-void deletelastvalue(List& list);
-void deletevalue(List& list, int value);
-Node* search(List& list, int value);
-void PrintList(List& list);
+#endif // LISTA_JEDNOKIERUNKOWA_HPP

@@ -1,148 +1,214 @@
-#include <iostream>
 #include "Lista_jednokierunkowa.hpp"
+#include <string>
 
+List::List() : head(nullptr), tail(nullptr) {}
 
-using namespace std;
-
-void Addvaluefirst(List& list, int value) {
-	Node* first = new Node{ value, nullptr };
-
-	if (list.head == nullptr)
-		list.head = list.tail = first;
-	else {
-		first->next = list.head;
-		list.head = first;
-	}
-
-}
-
-void Addvaluelast(List& list, int value) {
-	Node* last = new Node{ value, nullptr };
-
-
-	if (list.head == nullptr)
-		list.head = list.tail = last;
-	else {
-		list.tail->next = last;
-		list.tail = last;
-	}
-}
-
-void Addvalue(List& list, int value, int index) {
-	Node* node = new Node{ value };
-
-	if (list.head == nullptr) {
-		list.head = node;
-		list.tail = node;
-		return;
-	}
-
-	if (index == 0) {
-		node->next = list.head;
-		list.head = node;
-		return;
-	}
-
-	int i = 0;
-	Node* current = list.head;
-	while (current != nullptr) {
-		if (index - 1 == i) {
-			node->next = current->next;
-			current->next = node;
-
-			if (current == list.tail) {
-				list.tail = node;
-			}
-			return;
-		}
-
-		i++;
+List::~List()
+{
+	Node *current = head;
+	while (current != nullptr)
+	{
+		Node *toDelete = current;
 		current = current->next;
-	}
-
-	list.tail->next = node;
-	list.tail = node;
-}
-
-void deletefirstvalue(List& list) {
-	if (list.head == nullptr) {
-		cout << "brak wartosci" << endl;
-	}
-	else {
-		Node* toDelete = list.head;
-		list.head = list.head->next;
 		delete toDelete;
-		if (list.head == nullptr)
-			list.tail = nullptr;
 	}
 }
 
-void deletelastvalue(List& list) {
-	Node* last = list.head;
-
-	if (list.head == nullptr) {
-		cout << "brak wartosci" << endl;
+void List::addFirst(int value)
+{
+	Node *newNode = new Node(value);
+	if (head == nullptr)
+	{
+		head = tail = newNode;
 	}
-	else if (list.head == list.tail) {
-		delete list.head;
-		list.head = list.tail = nullptr;
-	}
-	else {
-		while (last != nullptr) {
-			if (last->next == list.tail) {
-				Node* toDelete = list.tail;
-				list.tail = last;
-				delete toDelete;
-				last->next = nullptr;
-				return;
-			}
-			last = last->next;
-		}
-
-		if (list.head == nullptr)
-			list.tail = nullptr;
+	else
+	{
+		newNode->next = head;
+		head = newNode;
 	}
 }
 
-void deletevalue(List& list, int value) {
-	Node* current = list.head;
+void List::addLast(int value)
+{
+	Node *newNode = new Node(value);
+	if (head == nullptr)
+	{
+		head = tail = newNode;
+	}
+	else
+	{
+		tail->next = newNode;
+		tail = newNode;
+	}
+}
 
-	if (current != nullptr && current->value == value) {
-		list.head = current->next;
-		delete current;
-
-		if (list.head == nullptr) {
-			list.tail = nullptr;
-		}
+void List::addAt(int value, int index)
+{
+	if (index == 0)
+	{
+		addFirst(value);
 		return;
 	}
 
-	while (current != nullptr && current->next != nullptr) {
-		if (current->next->value == value) {
-			Node* toDelete = current->next;
-			current->next = toDelete->next;
-			delete toDelete;
-
-			if (current->next == nullptr) {
-				list.tail = current;
-			}
-			return;
+	Node *current = head;
+	for (int i = 0; i <= index - 1; i++)
+	{
+		if (current == nullptr)
+		{
+			throw std::out_of_range("Index out of range: " + std::to_string(index));
 		}
 		current = current->next;
 	}
-}
 
-Node* search(List& list, int value) {
-	Node* point = list.head;
-	while (point != nullptr && point->value != value)
-		point = point->next;
-	return point;
-}
+	Node *newNode = new Node(value, current->next);
+	current->next = newNode;
 
-void PrintList(List& list) {
-	Node* curr = list.head;
-	while (curr != nullptr) {
-		cout << curr->value << endl;
-		curr = curr->next;
+	if (newNode->next == nullptr)
+	{
+		tail = newNode;
 	}
+}
+
+void List::deleteFirst()
+{
+	if (head == nullptr)
+	{
+		throw std::runtime_error("List is empty");
+	}
+
+	Node *toDelete = head;
+	head = head->next;
+	delete toDelete;
+
+	if (head == nullptr)
+	{
+		tail = nullptr;
+	}
+}
+
+void List::deleteLast()
+{
+	if (head == nullptr)
+	{
+		throw std::runtime_error("List is empty");
+	}
+
+	if (head == tail)
+	{
+		delete head;
+		head = tail = nullptr;
+		return;
+	}
+
+	Node *current = head;
+	while (current->next != tail)
+	{
+		current = current->next;
+	}
+
+	delete tail;
+	tail = current;
+	tail->next = nullptr;
+}
+
+void List::deleteValue(int value)
+{
+	if (head == nullptr)
+	{
+		throw std::runtime_error("List is empty");
+	}
+
+	if (head->value == value)
+	{
+		deleteFirst();
+		return;
+	}
+
+	Node *current = head;
+	while (current->next != nullptr && current->next->value != value)
+	{
+		current = current->next;
+	}
+
+	if (current->next == nullptr)
+	{
+		throw std::runtime_error("Value not found in the list");
+	}
+
+	Node *toDelete = current->next;
+	current->next = toDelete->next;
+	delete toDelete;
+
+	if (current->next == nullptr)
+	{
+		tail = current;
+	}
+}
+
+void List::deleteAt(int index)
+{
+	if (index < 0)
+	{
+		throw std::out_of_range("Index out of range");
+	}
+
+	if (head == nullptr)
+	{
+		throw std::runtime_error("List is empty");
+	}
+
+	if (index == 0)
+	{
+		deleteFirst();
+		return;
+	}
+
+	Node *current = head;
+	for (int i = 0; i < index - 1; i++)
+	{
+		if (current == nullptr || current->next == nullptr)
+		{
+			throw std::out_of_range("Index out of range");
+		}
+		current = current->next;
+	}
+
+	Node *toDelete = current->next;
+	if (toDelete == nullptr)
+	{
+		throw std::out_of_range("Index out of range");
+	}
+
+	current->next = toDelete->next;
+	delete toDelete;
+
+	if (current->next == nullptr)
+	{
+		tail = current;
+	}
+}
+
+List::Node *List::search(int value) const
+{
+	Node *current = head;
+	while (current != nullptr)
+	{
+		if (current->value == value)
+		{
+			return current;
+		}
+		current = current->next;
+	}
+	return nullptr;
+}
+
+void List::print() const
+{
+	Node *current = head;
+	while (current != nullptr)
+	{
+		std::cout << current->value << " ";
+		current = current->next;
+	}
+	std::cout << std::endl;
 }
